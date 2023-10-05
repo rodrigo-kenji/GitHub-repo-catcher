@@ -5,6 +5,7 @@ from src.file_manager.createFile import txtSave
 
 app = Flask(__name__)
 
+# Endpoint para download do arquivo com informações de usuário
 @app.route('/download', methods=['GET'])
 def getUserDownload():
     user = request.args.get('user')
@@ -20,6 +21,7 @@ def getUserDownload():
 
     return send_file(file_path, as_attachment=True), 200
 
+# Endpoint padrão
 @app.route('/')
 def hello():
     return 'Bem vindo a API GitHub-repo-catcher!'

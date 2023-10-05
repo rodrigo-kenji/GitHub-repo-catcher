@@ -7,6 +7,7 @@ class GitHub():
     def __init__(self, user: str):
         self._user = user
 
+    # Faz uso da API do GitHub para obter informações do repositório do usuário
     def _getRepos(self):
 
         try:
@@ -20,6 +21,7 @@ class GitHub():
 
         return { 'lista-de-repositorios': repos_list }
 
+    # Faz uso da API do GitHub para obter informações do usuário
     def _getUser(self):
 
         try:
@@ -36,6 +38,7 @@ class GitHub():
         }
         return user
 
+    # Retorna um dicionário com as informações do usuário e seus repositórios
     def getUserInfo(self):
         repo = self._getRepos()
         user = self._getUser()
