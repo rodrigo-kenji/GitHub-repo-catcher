@@ -1,5 +1,6 @@
-from github.gitRequests import request
-from github.gitExceptions import requestException
+from src.github.gitRequests import request
+from src.github.gitExceptions import requestException
+
 
 class GitHub():
 
@@ -9,37 +10,37 @@ class GitHub():
     def _getRepos(self):
 
         try:
-            repos = request(user=self._user, endpoint='repos')
+            repos = request(user=self._user, endpoint='/repos')
         except requestException as e:
-            print(e.message)
-            return None
+            return { 'message': e.message }
 
         repos_list = []
         for i in range(len(repos)):
             repos_list.append(repos[i]['name'])
 
-        return { 'repos_list': repos_list }
+        return { 'lista-de-repositorios': repos_list }
 
     def _getUser(self):
 
         try:
             user_info = request(user=self._user)
         except requestException as e:
-            print(e.message)
-            return None
+            return { 'message': e.message }
 
         user = {
-            'name': user_info['login'],
+            'nome': user_info['login'],
             'perfil': user_info['url'],
-            'public_repos': user_info['public_repos'],
-            'followers': user_info['followers'],
-            'following': user_info['following']
+            'numero-de-repositorios-publicos': user_info['public_repos'],
+            'numero-de-seguidores': user_info['followers'],
+            'numero-de-usuarios-seguidos': user_info['following']
         }
         return user
 
     def getUserInfo(self):
         repo = self._getRepos()
         user = self._getUser()
+        if 'message' in user:
+            return user
         if (repo and user):
             user.update(repo)
             return user
